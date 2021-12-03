@@ -37,7 +37,7 @@ def checkout(skus):
         # first calculate the amount for an offer
         # find shared items and remainder
         shared, remainder =  divmod(count_of_skus[sku], offer_multiple)
-        count_of_skus["".join([sku, "_offer"])] = shared
+        count_of_skus["".join([sku, str(offer_multiple), "_offer"])] = shared
         count_of_skus[sku] = remainder
     
     def _calculate_E_offer(count_of_skus):
@@ -46,12 +46,13 @@ def checkout(skus):
         """
         _calculate_sku_offers("E", 2, count_of_skus)
         # reduce B quantity, if less than 0 keep 0
-        count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E_offer"], 0)
+        count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
 
     # Calculate the offers for E
     _calculate_E_offer(count_of_skus)
 
     # Calculate the offers for A and B
+    _calculate_sku_offers("A", 5, count_of_skus)
     _calculate_sku_offers("A", 3, count_of_skus)
     _calculate_sku_offers("B", 2, count_of_skus)
     
@@ -63,9 +64,11 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["C"]*20
     total_cost_of_basket += count_of_skus["D"]*15
     total_cost_of_basket += count_of_skus["E"]*40
-    total_cost_of_basket += count_of_skus["A_offer"]*130
-    total_cost_of_basket += count_of_skus["B_offer"]*45
-    total_cost_of_basket += count_of_skus["E_offer"]*80
+    total_cost_of_basket += count_of_skus["A3_offer"]*130
+    total_cost_of_basket += count_of_skus["B2_offer"]*45
+    total_cost_of_basket += count_of_skus["E2_offer"]*80
+    total_cost_of_basket += count_of_skus["A5_offer"]*200
 
     return total_cost_of_basket
+
 

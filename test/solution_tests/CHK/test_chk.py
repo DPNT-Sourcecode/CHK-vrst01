@@ -10,4 +10,7 @@ class TestCHK():
         assert checkout_solution.checkout("AAADF") == -1
     def test_E_offer(self):
         assert checkout_solution.checkout("ABBEE") == 160
+    def test_A7(self):
+        assert checkout_solution.checkout("AAAAA") == 200
+
 
