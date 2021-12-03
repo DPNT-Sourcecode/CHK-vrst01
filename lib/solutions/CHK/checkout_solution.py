@@ -57,9 +57,7 @@ def checkout(skus):
             count_of_skus["F"] = number_of_F
             count_of_skus["F2_offer"] = total_for_F_offer
             return None
-        remainder = number_of_F - 2
-        if number_of_F == 1:
-            number_of_F = 0
+        remainder = number_of_F - 3
         total_for_F_offer += 1
         _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
 
@@ -89,4 +87,5 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
+
 
