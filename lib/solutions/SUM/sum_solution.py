@@ -21,9 +21,9 @@ def compute(x, y):
     # TODO: The instructions for this task are ambiguous as they do not state which, if any, of the aspects
     # of the range are inclusive or exclusive; "between" is ambiguous, defaulting to python range functionality
     # which is inclusive of lower bound and exclusive of higher
-    
-    if y not in range(0,100):
-        raise InputRangeError("The input {} is not in range(0-100).".format(y))
+    # User helper function to minify code for checking if within range
+    _check_input_in_range([x, y])
     return x+y
+
 
 
