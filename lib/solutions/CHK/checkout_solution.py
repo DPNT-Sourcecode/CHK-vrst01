@@ -65,5 +65,7 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["E"]*40
     total_cost_of_basket += count_of_skus["A_offer"]*130
     total_cost_of_basket += count_of_skus["B_offer"]*45
+    total_cost_of_basket += count_of_skus["E_offer"]*80
 
     return total_cost_of_basket
+
