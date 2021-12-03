@@ -28,16 +28,7 @@ def checkout(skus):
         count_of_skus[sku] = sku_count
     if total_count_of_skus != length_of_input_string:
         return -1
-        
-    def _calculate_E_offer(count_of_skus):
-        """
-        Helper function for the special E case multiple calculation.
-        """
-        _calculate_sku_offers("E", 2, count_of_skus)
-        # reduce B quantity, if less than 0 keep 0
-        count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E_offer"], 0)
-    
-    # Calculate the offers for A and B
+
     def _calculate_sku_offers(sku, offer_multiple, count_of_skus):
         """
         Helper function to calculate the number of offers for,
@@ -49,9 +40,20 @@ def checkout(skus):
         count_of_skus["".join([sku, "_offer"])] = shared
         count_of_skus[sku] = remainder
     
+    def _calculate_E_offer(count_of_skus):
+        """
+        Helper function for the special E case multiple calculation.
+        """
+        _calculate_sku_offers("E", 2, count_of_skus)
+        # reduce B quantity, if less than 0 keep 0
+        count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E_offer"], 0)
+
+    # Calculate the offers for E
+    _calculate_E_offer(count_of_skus)
+
+    # Calculate the offers for A and B
     _calculate_sku_offers("A", 3, count_of_skus)
     _calculate_sku_offers("B", 2, count_of_skus)
-    
     
     # Calculate total    
     # Multiply each count by the skus corresponding value
@@ -60,10 +62,12 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["B"]*30
     total_cost_of_basket += count_of_skus["C"]*20
     total_cost_of_basket += count_of_skus["D"]*15
+    total_cost_of_basket += count_of_skus["E"]*40
     total_cost_of_basket += count_of_skus["A_offer"]*130
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
     return total_cost_of_basket
+
 
 
 
