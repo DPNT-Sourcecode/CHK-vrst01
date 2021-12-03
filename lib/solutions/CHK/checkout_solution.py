@@ -42,13 +42,7 @@ def checkout(skus):
     _calculate_sku_offers("A", 3)
     _calculate_sku_offers("B", 2)
     
-    # Calculate total
-    def _update_total_for_given_sku(sku, cost_per_unit, total_cost_of_basket, count_of_skus):
-        """
-        Helper function to update total by given sku count and cost.
-        """
-        total_cost_of_basket += count_of_skus[sku]*cost_per_unit
-    
+    # Calculate total    
     # Multiply each count by the skus corresponding value
     total_cost_of_basket = 0
     total_cost_of_basket += count_of_skus["A"]*50
@@ -58,11 +52,4 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["A_offer"]*130
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
-    raise NotImplementedError()
-
-
-
-
-
-
-
+    return total_cost_of_basket
