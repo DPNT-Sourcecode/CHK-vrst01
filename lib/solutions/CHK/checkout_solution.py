@@ -34,15 +34,15 @@ def checkout(skus):
         Helper function to calculate the number of offers for,
         and decrement the associated count of, a given sku
         """
+        import pdb; pdb.set_trace()
         # first calculate the amount for an offer
-        count_of_skus["".join([sku, "_offer"])] = count_of_skus[sku] % offer_multiple
+        count_of_skus["".join([sku, "_offer"])] = divmod(count_of_skus[sku], offer_multiple)
         # then reduce the offer amount
         count_of_skus[sku] = count_of_skus[sku] - count_of_skus["".join([sku, "_offer"])]*offer_multiple
     
     _calculate_sku_offers("A", 3, count_of_skus)
     _calculate_sku_offers("B", 2, count_of_skus)
     
-    import pdb; pdb.set_trace()
     
     # Calculate total    
     # Multiply each count by the skus corresponding value
@@ -55,5 +55,6 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
     return total_cost_of_basket
+
 
 
