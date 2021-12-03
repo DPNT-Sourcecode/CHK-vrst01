@@ -30,6 +30,10 @@ def checkout(skus):
     
     # Calculate the offers for A and B
     def _calculate_sku_offers(sku, offer_multiple, count_of_skus):
+        """
+        Helper function to calculate the number of offers for,
+        and decrement the associated count of, a given sku
+        """
         # first calculate the amount for an offer
         count_of_skus["".join(sku, "_offer")] = count_of_skus[sku] % offer_multiple
         # then reduce the offer amount
@@ -38,7 +42,14 @@ def checkout(skus):
     _calculate_sku_offers("A", 3)
     _calculate_sku_offers("B", 2)
     
-    # Multiple each count by the skus corresponding value
+    # Calculate total
+    def _update_total_for_given_sku(sku, cost_per_unit, total_cost_of_basket, count_of_skus):
+        """
+        Helper function to update total by given sku count and cost.
+        """
+        total_cost_of_basket += count_of_skus[sku]*cost_per_unit
+    
+    # Multiply each count by the skus corresponding value
     total_cost_of_basket = 0
     total_cost_of_basket += count_of_skus["A"]*50
     total_cost_of_basket += count_of_skus["B"]*30
@@ -48,6 +59,7 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
     raise NotImplementedError()
+
 
 
 
