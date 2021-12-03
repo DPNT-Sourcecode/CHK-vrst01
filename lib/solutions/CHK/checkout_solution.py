@@ -67,10 +67,3 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
     return total_cost_of_basket
-
-
-
-
-
-
-

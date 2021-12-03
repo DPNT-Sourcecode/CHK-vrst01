@@ -9,5 +9,5 @@ class TestCHK():
     def test_unpermitted_value(self):
         assert checkout_solution.checkout("AAADF") == -1
     def test_E_offer(self):
+        import pdb; pdb.set_trace()
         assert checkout_solution.checkout("ABBEE") == 210
-
