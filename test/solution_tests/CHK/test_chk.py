@@ -1,9 +1,10 @@
-from solutions.CHK import checkout
+from solutions.CHK import checkout_solution
 import pytest
 
 class TestCHK():
-    def test_hlo(self):
-        assert hello_solution.hello("clive") == "Hello, clive!"
+    def test_chk(self):
+        assert checkout_solution.checkout("AAABCBAD") == 260
     def test_non_string(self):
-        with pytest.raises(TypeError):
-            assert hello_solution.hello(1)
+        assert checkout_solution.checkout(1) == -1
+    def test_unpermitted_value(self):
+        assert checkout_solution.checkout("AAADE") == -1
