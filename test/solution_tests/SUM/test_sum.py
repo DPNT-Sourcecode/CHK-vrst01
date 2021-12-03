@@ -12,4 +12,3 @@ class TestSum():
     def test_invalid_input_type(self):
         with pytest.raises(sum_solution.InputTypeError):
             sum_solution.compute("jam", 1)
-

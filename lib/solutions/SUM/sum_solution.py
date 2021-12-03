@@ -24,6 +24,3 @@ def compute(x, y):
     # User helper function to minify code for checking if within range
     _check_input_in_range([x, y])
     return x+y
-
-
-
