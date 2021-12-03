@@ -7,4 +7,9 @@ class TestSum():
     def test_inclusive_exclusive_range_value(self):
         assert sum_solution.compute(0, 99) == 99
     def test_invalid_range_value(self):
-        with pytest.raises()
+        with pytest.raises(sum_solution.InputRangeError):
+            sum_solution.compute(101,1)
+    def test_invalid_input_type(self):
+        with pytest.raises(sum_solution.InputTypeError):
+            sum_solution.compute("jam", 1)
+
