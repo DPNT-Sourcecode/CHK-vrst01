@@ -63,8 +63,6 @@ def checkout(skus):
         remainder = number_of_F - 2
         total_for_F_offer += 1
         _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
-        
-        
 
     # Calculate the offers for E
     _calculate_E_offer(count_of_skus)
@@ -82,12 +80,15 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["C"]*20
     total_cost_of_basket += count_of_skus["D"]*15
     total_cost_of_basket += count_of_skus["E"]*40
+    total_cost_of_basket += count_of_skus["F"]*10
     total_cost_of_basket += count_of_skus["A3_offer"]*130
     total_cost_of_basket += count_of_skus["B2_offer"]*45
     total_cost_of_basket += count_of_skus["E2_offer"]*80
     total_cost_of_basket += count_of_skus["A5_offer"]*200
+    total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
+
 
 
 
