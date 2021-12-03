@@ -8,9 +8,10 @@ def checkout(skus):
     """
     # Very first validate the input:
         # - Validate that it is a string
-        # - Validate that it only contains appropriate letters (A,B,C,D) 
+        # - Validate that it only contains appropriate letters (A,B,C,D,E) 
     # Gather the number of each letter present in the string provided
-    # Then for special cases A and B, find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
+    # For special case E, find the multiples first, then reduce the number of B according to it's offer detail.
+    # Then for special cases A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
     # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
         
     if not isinstance(skus, str):
@@ -21,7 +22,7 @@ def checkout(skus):
     count_of_skus = {}
     length_of_input_string = len(skus)
     
-    for sku in ("ABCD"):
+    for sku in ("ABCDE"):
         sku_count = skus.count(sku)
         total_count_of_skus += sku_count
         count_of_skus[sku] = sku_count
@@ -55,6 +56,7 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["B_offer"]*45
 
     return total_cost_of_basket
+
 
 
 
