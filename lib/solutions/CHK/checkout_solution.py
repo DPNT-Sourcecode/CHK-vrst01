@@ -10,6 +10,7 @@ def checkout(skus):
         # - Validate that it is a string
         # - Validate that it only contains appropriate letters (A,B,C,D,E) 
     # Gather the number of each letter present in the string provided
+    # For special case F, we need to find the number of recursively modify the number in F to keep applying the offer, every multiple of 2 removes 1 F from consideration.
     # For special case E, find the multiples first, then reduce the number of B according to it's offer detail.
     # Then for special cases A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
     # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
@@ -47,6 +48,20 @@ def checkout(skus):
         _calculate_sku_offers("E", 2, count_of_skus)
         # reduce B quantity, if less than 0 keep 0
         count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
+    
+    total_for_F_offer = 0
+
+    def _calculate_F_offer(count_of_skus, total_for_F_offer):
+        """
+        Helper function for the special F case multiple calculation.
+        """
+        # if less than 3, terminate early
+        if count_of_skus["F"]<3:
+            count_of_skus["F2_offer"] = total_for_F_offer
+            return None
+        shared, remainder = divmod(count_of_skus["F"], 2)
+        
+        
 
     # Calculate the offers for E
     _calculate_E_offer(count_of_skus)
@@ -70,5 +85,6 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["A5_offer"]*200
 
     return total_cost_of_basket
+
 
 
