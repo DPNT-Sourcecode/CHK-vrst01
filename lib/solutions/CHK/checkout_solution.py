@@ -51,15 +51,18 @@ def checkout(skus):
     
     total_for_F_offer = 0
 
-    def _calculate_F_offer(count_of_skus, total_for_F_offer):
+    def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer):
         """
         Helper function for the special F case multiple calculation.
         """
         # if less than 3, terminate early
-        if count_of_skus["F"]<3:
+        if number_of_F<=2:
+            count_of_skus["F"] = number_of_F
             count_of_skus["F2_offer"] = total_for_F_offer
             return None
-        shared, remainder = divmod(count_of_skus["F"], 2)
+        remainder = number_of_F - 2
+        total_for_F_offer += 1
+        _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
         
         
 
@@ -85,6 +88,7 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["A5_offer"]*200
 
     return total_cost_of_basket
+
 
 
 
