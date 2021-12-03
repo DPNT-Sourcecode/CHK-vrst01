@@ -8,7 +8,7 @@ def checkout(skus):
     """
     # Very first validate the input:
         # - Validate that it is a string
-        # - Validate that it only contains appropriate letters (A,B,C,D,E) 
+        # - Validate that it only contains appropriate letters (A,B,C,D,E,F) 
     # Gather the number of each letter present in the string provided
     # For special case F, we need to find the number of recursively modify the number in F to keep applying the offer, every multiple of 2 removes 1 F from consideration.
     # For special case E, find the multiples first, then reduce the number of B according to it's offer detail.
@@ -23,7 +23,7 @@ def checkout(skus):
     count_of_skus = {}
     length_of_input_string = len(skus)
     
-    for sku in ("ABCDE"):
+    for sku in ("ABCDEF"):
         sku_count = skus.count(sku)
         total_count_of_skus += sku_count
         count_of_skus[sku] = sku_count
@@ -49,13 +49,12 @@ def checkout(skus):
         # reduce B quantity, if less than 0 keep 0
         count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
     
-    total_for_F_offer = 0
-
-    def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer):
+    def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer=0):
         """
         Helper function for the special F case multiple calculation.
         """
         # if less than 3, terminate early
+        import pdb; pdb.set_trace()
         if number_of_F<=2:
             count_of_skus["F"] = number_of_F
             count_of_skus["F2_offer"] = total_for_F_offer
@@ -63,6 +62,8 @@ def checkout(skus):
         remainder = number_of_F - 2
         total_for_F_offer += 1
         _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
+
+    _calculate_F_offer(count_of_skus["F"], count_of_skus)
 
     # Calculate the offers for E
     _calculate_E_offer(count_of_skus)
@@ -88,8 +89,3 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
-
-
-
-
-
