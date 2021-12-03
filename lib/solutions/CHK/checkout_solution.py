@@ -3,10 +3,15 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
-    
+    """
+        Function to calculate total value for skus provided.
+    """
     # Very first validate the input:
         # - Validate that it is a string
-        # - Validate that it only contains appropriate letters (A,B,C,D)
+        # - Validate that it only contains appropriate letters (A,B,C,D) 
+    # Gather the number of each letter present in the string provided
+    # Then for special cases A and B, find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
+    # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
         
     if not isinstance(skus, str):
         return -1
@@ -35,12 +40,15 @@ def checkout(skus):
     
     # Multiple each count by the skus corresponding value
     total_cost_of_basket = 0
-    count_of_skus[]
-    
-    # First gather the number of each letter present in the string provided
-    # Then for special cases A and B, find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
-    # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
+    total_cost_of_basket += count_of_skus["A"]*50
+    total_cost_of_basket += count_of_skus["B"]*30
+    total_cost_of_basket += count_of_skus["C"]*20
+    total_cost_of_basket += count_of_skus["D"]*15
+    total_cost_of_basket += count_of_skus["A_offer"]*130
+    total_cost_of_basket += count_of_skus["B_offer"]*45
+
     raise NotImplementedError()
+
 
 
 
