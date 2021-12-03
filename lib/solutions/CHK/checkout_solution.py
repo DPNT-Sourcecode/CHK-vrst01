@@ -24,12 +24,17 @@ def checkout(skus):
         return -1
     
     # Calculate the offers for A and B
-    count_of_skus["A"].
+    def _calculate_sku_offers(sku, offer_multiple, count_of_skus):
+    # first calculate the amount for an offer
+    count_of_skus["A_offer"] = count_of_skus["A"] % 3
+    # then reduce the offer amount
+    count_of_skus["A"] - count_of_skus["A_offer"]*3
     
     # First gather the number of each letter present in the string provided
     # Then for special cases A and B, find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
     # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
     raise NotImplementedError()
+
 
 
 
