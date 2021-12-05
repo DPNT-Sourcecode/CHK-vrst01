@@ -9,6 +9,22 @@
 # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
 
 
+SKU_PRICE_MAP = {
+    "A": 50,
+    "B": 30,
+    "C": 20,
+    "D": 15,
+    "E": 40,
+    "F": 10,
+}
+
+SKU_OFFER_PRICE_MAP = {
+    "A3_offer": 130,
+    "A5_offer": 200,
+    "B2_offer": 45,
+    "E2_offer": 80,
+    "F2_offer": 20
+}
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -20,19 +36,20 @@ def checkout(skus):
     if not isinstance(skus, str):
         return -1
     
-    # Check length of string, then do count for each candidate letter, if sum total is different then an incorrect character is present
+    # Check length of string, then do count for each candidate letter to get subtotals and total
+    # if total is different then an incorrect character is present
     total_count_of_skus = 0
     count_of_skus = {}
     length_of_input_string = len(skus)
     
-    for sku in ("ABCDEF"):
+    for sku in SKU_PRICE_MAP.keys():
         sku_count = skus.count(sku)
         total_count_of_skus += sku_count
         count_of_skus[sku] = sku_count
     if total_count_of_skus != length_of_input_string:
         return -1
 
-    def _calculate_sku_offers(sku, offer_multiple, count_of_skus):
+    def _calculate_sku_mulitple_offers(sku, offer_multiple, count_of_skus):
         """
         Helper function to calculate the number of offers for,
         and decrement the associated count of, a given sku
@@ -40,7 +57,8 @@ def checkout(skus):
         # first calculate the amount for an offer
         # find shared items and remainder
         shared, remainder =  divmod(count_of_skus[sku], offer_multiple)
-        count_of_skus["".join([sku, str(offer_multiple), "_offer"])] = shared
+        offer_label = _offer_label_composition(sku, offer_multiple)
+        count_of_skus[offer_label] = shared
         count_of_skus[sku] = remainder
     
     def _calculate_E_offer(count_of_skus):
@@ -89,4 +107,9 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
+
+def _offer_label_composition(sku, offer_multiple):
+    """Helper function to create offer name strings."""
+    sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
+    return sku_offer_label
 
