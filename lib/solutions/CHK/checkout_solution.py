@@ -44,7 +44,17 @@ SKU_OFFER_PRICE_MAP = {
     "A5_offer": 200,
     "B2_offer": 45,
     "E2_offer": 80,
-    "F2_offer": 20
+    "F2_offer": 20,
+    "H5_offer": 45,
+    "H10_offer": 80,
+    "K2_offer": 150,
+    "N3_offer": 120,
+    "P5_offer": 200,
+    "Q3_offer": 80,
+    "R3_offer": 150,
+    "U3_offer": 120,
+    "V2_offer": 90,
+    "V3_offer": 130,
 }
 
 # noinspection PyUnusedLocal
@@ -166,3 +176,4 @@ def _update_for_multiple_offers(count_of_skus):
     _calculate_sku_multiple_offers("A", 5, count_of_skus)
     _calculate_sku_multiple_offers("A", 3, count_of_skus)
     _calculate_sku_multiple_offers("B", 2, count_of_skus)
+
