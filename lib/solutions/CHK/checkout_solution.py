@@ -21,7 +21,7 @@ SKU_PRICE_MAP = {
     "H": 10,
     "I": 35,
     "J": 60,
-    "K": 80,
+    "K": 70,
     "L": 90,
     "M": 15,
     "N": 40,
@@ -29,14 +29,14 @@ SKU_PRICE_MAP = {
     "P": 50,
     "Q": 30,
     "R": 50,
-    "S": 30,
+    "S": 20,
     "T": 20,
     "U": 40,
     "V": 50,
     "W": 20,
-    "X": 90,
-    "Y": 10,
-    "Z": 50,
+    "X": 17,
+    "Y": 20,
+    "Z": 21,
 }
 
 SKU_OFFER_PRICE_MAP = {
@@ -47,7 +47,7 @@ SKU_OFFER_PRICE_MAP = {
     "F2_offer": 20,
     "H5_offer": 45,
     "H10_offer": 80,
-    "K2_offer": 150,
+    "K2_offer": 120,
     "N3_offer": 120,
     "P5_offer": 200,
     "Q3_offer": 80,
@@ -131,7 +131,10 @@ SKU_OFFER_TYPES = {
             "sku": "V",
             "offer_multiple": 2,
         },
-    ]
+    ],
+    # sort according to value and then alphabetically, highest to lowest.
+    # TODO: if more challenge remained, consider a sorting function.
+    "mix_and_match": "
 }
 
 # noinspection PyUnusedLocal
@@ -258,3 +261,4 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
