@@ -88,6 +88,24 @@ def checkout(skus):
 
     return total_cost_of_basket
     
+def _update_for_self_modifying_sku_offers(count_of_skus):
+    """Calculate and update all self-modifying offers."""
+    _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
+    _calculate_self_modifying_offer("U", 3, 1, count_of_skus["U"], count_of_skus)
+
+def _update_for_secondary_sku_offers(count_of_skus):
+    """Calculate and update all secondary sku offers."""
+    _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
+    _calculate_sku_offer_affecting_secondary_sku("N", 3, "M", 1, count_of_skus)
+    _calculate_sku_offer_affecting_secondary_sku("R", 3, "Q", 1, count_of_skus)
+
+    
+def _update_for_multiple_offers(count_of_skus):
+    """Calculate and update all multiple offers."""
+    _calculate_sku_multiple_offers("A", 5, count_of_skus)
+    _calculate_sku_multiple_offers("A", 3, count_of_skus)
+    _calculate_sku_multiple_offers("B", 2, count_of_skus)
+    
 def _calculate_total(count_of_skus):
     """Helper function to calculate the total for all offers and SKUs"""
     total_cost_of_basket = 0
@@ -163,17 +181,4 @@ def _calculate_self_modifying_offer(
         total_for_sku_offer
     )
 
-def _update_for_self_modifying_sku_offers(count_of_skus):
-    """Calculate and update all self-modifying offers."""
-    _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
-
-def _update_for_secondary_sku_offers(count_of_skus):
-    """Calculate and update all secondary sku offers."""
-    _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
-    
-def _update_for_multiple_offers(count_of_skus):
-    """Calculate and update all multiple offers."""
-    _calculate_sku_multiple_offers("A", 5, count_of_skus)
-    _calculate_sku_multiple_offers("A", 3, count_of_skus)
-    _calculate_sku_multiple_offers("B", 2, count_of_skus)
 
