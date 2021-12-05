@@ -29,3 +29,10 @@ class TestCHK():
         assert checkout_solution.checkout("ARRRQQQ") == 260
     def test_R_offer_Q_offer(self):
         assert checkout_solution.checkout("ARRRQQQQ") == 280
+    def test_mix_and_match_offer(self):
+        assert checkout_solution.checkout("ZYXTTTTS") == 127
+    def test_R_offer_Q_offer_and_mix_and_match_offer(self):
+        assert checkout_solution.checkout("ARRRZQQSQQYXTTTT") == 407
+    def test_R_offer_Q_offer_mix_and_match_offer_and_7Us_offer(self):
+        assert checkout_solution.checkout("AUUUUUUUARRRZQQSQQYXTTTT") == 697
+
