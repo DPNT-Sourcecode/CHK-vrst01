@@ -9,7 +9,7 @@
 # Then for special cases like A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
 # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
 
-
+# TODO: function that can parse the input from the challenge file would make remove effort here.
 SKU_PRICE_MAP = {
     "A": 50,
     "B": 30,
@@ -17,6 +17,26 @@ SKU_PRICE_MAP = {
     "D": 15,
     "E": 40,
     "F": 10,
+    "G": 20,
+    "H": 10,
+    "I": 35,
+    "J": 60,
+    "K": 80,
+    "L": 90,
+    "M": 15,
+    "N": 40,
+    "O": 10,
+    "P": 50,
+    "Q": 30,
+    "R": 50,
+    "S": 30,
+    "T": 20,
+    "U": 40,
+    "V": 50,
+    "W": 20,
+    "X": 90,
+    "Y": 10,
+    "Z": 50,
 }
 
 SKU_OFFER_PRICE_MAP = {
@@ -146,11 +166,3 @@ def _update_for_multiple_offers(count_of_skus):
     _calculate_sku_multiple_offers("A", 5, count_of_skus)
     _calculate_sku_multiple_offers("A", 3, count_of_skus)
     _calculate_sku_multiple_offers("B", 2, count_of_skus)
-
-
-
-
-
-
-
-
