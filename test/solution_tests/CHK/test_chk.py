@@ -29,4 +29,3 @@ class TestCHK():
         assert checkout_solution.checkout("ARRRQQQ") == 260
     def test_R_offer_Q_offer(self):
         assert checkout_solution.checkout("ARRRQQQQ") == 280
-
