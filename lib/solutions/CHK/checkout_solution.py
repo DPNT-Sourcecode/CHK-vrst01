@@ -93,43 +93,43 @@ SKU_OFFER_TYPES = {
     "multiple": [
         {
             "sku": "A",
-            "offer_multiple": "5",
+            "offer_multiple": 5,
         },
         {
             "sku": "A",
-            "offer_multiple": "3",
+            "offer_multiple": 3,
         },
         {
             "sku": "B",
-            "offer_multiple": "2",
+            "offer_multiple": 2,
         },
         {
             "sku": "H",
-            "offer_multiple": "10",
+            "offer_multiple": 10,
         },
         {
             "sku": "H",
-            "offer_multiple": "5",
+            "offer_multiple": 5,
         },
         {
             "sku": "K",
-            "offer_multiple": "2",
+            "offer_multiple": 2,
         },
         {
             "sku": "P",
-            "offer_multiple": "5",
+            "offer_multiple": 5,
         },
         {
             "sku": "Q",
-            "offer_multiple": "3",
+            "offer_multiple": 3,
         },
         {
             "sku": "V",
-            "offer_multiple": "3",
+            "offer_multiple": 3,
         },
         {
             "sku": "V",
-            "offer_multiple": "2",
+            "offer_multiple": 2,
         },
     ]
 }
@@ -174,22 +174,15 @@ def _update_for_self_modifying_sku_offers(count_of_skus):
 
 def _update_for_secondary_sku_offers(count_of_skus):
     """Calculate and update all secondary sku offers."""
-    _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
-    _calculate_sku_offer_affecting_secondary_sku("N", 3, "M", 1, count_of_skus)
-    _calculate_sku_offer_affecting_secondary_sku("R", 3, "Q", 1, count_of_skus)
+    for sku_dictionary in SKU_OFFER_TYPES["secondary_sku_modifying"]:
+        sku_dictionary.update({"count_of_skus": count_of_skus})
+        _calculate_sku_offer_affecting_secondary_sku(**sku_dictionary)
 
 def _update_for_multiple_offers(count_of_skus):
     """Calculate and update all multiple offers."""
-    _calculate_sku_multiple_offers("A", 5, count_of_skus)
-    _calculate_sku_multiple_offers("A", 3, count_of_skus)
-    _calculate_sku_multiple_offers("B", 2, count_of_skus)
-    _calculate_sku_multiple_offers("H", 10, count_of_skus)
-    _calculate_sku_multiple_offers("H", 5, count_of_skus)
-    _calculate_sku_multiple_offers("K", 2, count_of_skus)
-    _calculate_sku_multiple_offers("P", 5, count_of_skus)
-    _calculate_sku_multiple_offers("Q", 3, count_of_skus)
-    _calculate_sku_multiple_offers("V", 3, count_of_skus)
-    _calculate_sku_multiple_offers("V", 2, count_of_skus)
+    for sku_dictionary in SKU_OFFER_TYPES["multiple"]:
+        sku_dictionary.update({"count_of_skus": count_of_skus})
+        _calculate_sku_multiple_offers(**sku_dictionary)
     
 def _calculate_total(count_of_skus):
     """Helper function to calculate the total for all offers and SKUs"""
@@ -265,6 +258,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
