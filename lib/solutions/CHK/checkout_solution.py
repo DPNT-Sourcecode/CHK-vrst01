@@ -1,4 +1,5 @@
 # Refactor code before chk4
+# Update for chk4
 # Very first validate the input:
     # - Validate that it is a string
     # - Validate that it only contains appropriate letters (A,B,C,D,E,F...) 
@@ -53,29 +54,20 @@ def checkout(skus):
     _update_for_secondary_sku_offers(count_of_skus)
     _update_for_multiple_offers(count_of_skus)
 
-    
+    total_cost_of_basket = _calculate_total(count_of_skus)
 
     return total_cost_of_basket
     
 def _calculate_total(count_of_skus):
     """Helper function to calculate the total for all offers and SKUs"""
-    # Calculate total    
-    # Multiply each count by the skus corresponding value
     total_cost_of_basket = 0
     all_sku_prices = {}
     all_sku_prices.update(SKU_PRICE_MAP)
     all_sku_prices.update(SKU_OFFER_PRICE_MAP)
-    total_cost_of_basket += count_of_skus["A"]*50
-    total_cost_of_basket += count_of_skus["B"]*30
-    total_cost_of_basket += count_of_skus["C"]*20
-    total_cost_of_basket += count_of_skus["D"]*15
-    total_cost_of_basket += count_of_skus["E"]*40
-    total_cost_of_basket += count_of_skus["F"]*10
-    total_cost_of_basket += count_of_skus["A3_offer"]*130
-    total_cost_of_basket += count_of_skus["B2_offer"]*45
-    total_cost_of_basket += count_of_skus["E2_offer"]*80
-    total_cost_of_basket += count_of_skus["A5_offer"]*200
-    total_cost_of_basket += count_of_skus["F2_offer"]*20
+    # Multiply each sku/offer count by its corresponding value
+    for priced_item, price in all_sku_prices.items():
+        total_cost_of_basket += count_of_skus.get(priced_item, 0)*price
+    return total_cost_of_basket
 
 def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
@@ -154,6 +146,7 @@ def _update_for_multiple_offers(count_of_skus):
     _calculate_sku_multiple_offers("A", 5, count_of_skus)
     _calculate_sku_multiple_offers("A", 3, count_of_skus)
     _calculate_sku_multiple_offers("B", 2, count_of_skus)
+
 
 
 
