@@ -206,9 +206,10 @@ def _update_for_mix_and_match_offers(count_of_skus):
         count_of_skus[sku] = 0
     shared, remainder =  divmod(len(sub_sku), offer_multiple)
     # create a sub_sku for remainder letters
-    skus_to_keep = sub_sku[-remainder:]
-    for sku in set(skus_to_keep):
-        count_of_skus[sku] = skus_to_keep.count(sku)
+    if remainder:
+        skus_to_keep = sub_sku[-remainder:]
+        for sku in set(skus_to_keep):
+            count_of_skus[sku] = skus_to_keep.count(sku)
     if shared:
         offer_label = _offer_label_composition(skus, offer_multiple)
         count_of_skus[offer_label] = shared
@@ -287,6 +288,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
