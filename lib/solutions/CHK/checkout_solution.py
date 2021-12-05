@@ -87,5 +87,3 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
-
-
