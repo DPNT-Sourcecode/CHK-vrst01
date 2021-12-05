@@ -55,6 +55,7 @@ SKU_OFFER_PRICE_MAP = {
     "U3_offer": 120,
     "V2_offer": 90,
     "V3_offer": 130,
+    "ZSTYX3_offer": 45,
 }
 
 SKU_OFFER_TYPES = {
@@ -132,9 +133,12 @@ SKU_OFFER_TYPES = {
             "offer_multiple": 2,
         },
     ],
-    # sort according to value and then alphabetically, highest to lowest.
+    # sort according to value, highest to lowest, and then alphabetically.
     # TODO: if more challenge remained, consider a sorting function.
-    "mix_and_match": "
+    "mix_and_match": {
+        "sku": "ZSTYX",
+        "offer_multiple": 3,
+    }
 }
 
 # noinspection PyUnusedLocal
@@ -163,6 +167,7 @@ def checkout(skus):
     _update_for_self_modifying_sku_offers(count_of_skus)
     _update_for_secondary_sku_offers(count_of_skus)
     _update_for_multiple_offers(count_of_skus)
+    _update_for_mix_and_match_offers(count_of_skus)
 
     total_cost_of_basket = _calculate_total(count_of_skus)
 
@@ -261,4 +266,5 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
