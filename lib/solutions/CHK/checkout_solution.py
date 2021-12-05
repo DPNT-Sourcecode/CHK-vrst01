@@ -57,6 +57,45 @@ SKU_OFFER_PRICE_MAP = {
     "V3_offer": 130,
 }
 
+_calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
+    _calculate_sku_offer_affecting_secondary_sku("N", 3, "M", 1, count_of_skus)
+    _calculate_sku_offer_affecting_secondary_sku("R", 3, "Q", 1, count_of_skus)
+
+SKU_OFFER_TYPES = {
+    "self_modifying": [
+        {
+            "sku": "F",
+            "offer_multiple": 2,
+            "total_modifier": 1,
+        },
+        {
+            "sku": "U",
+            "offer_multiple": 3,
+            "total_modifier": 1,
+        },
+    ],
+    "secondary_sku_modifying": [
+        {
+            "sku": "E",
+            "offer_multiple": 2,
+            "secondary_sku": "B",
+            "number_of_secondary_sku": 1
+        },
+        {
+            "sku": "N",
+            "offer_multiple": 3,
+            "secondary_sku": "M",
+            "number_of_secondary_sku": 1
+        },
+        {
+            "sku": "R",
+            "offer_multiple": 3,
+            "secondary_sku": "Q",
+            "number_of_secondary_sku": 1
+        },
+    ]
+}
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -186,6 +225,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
