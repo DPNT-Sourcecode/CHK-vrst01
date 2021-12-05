@@ -134,14 +134,14 @@ def checkout(skus):
 
     def _update_for_secondary_sku_offers(count_of_skus):
         """Calculate and update all secondary sku offers."""
-
-    # Calculate the offers for E
-    _calculate_E_offer(count_of_skus)
-
-    # Calculate the offers for A and B
-    _calculate_sku_offers("A", 5, count_of_skus)
-    _calculate_sku_offers("A", 3, count_of_skus)
-    _calculate_sku_offers("B", 2, count_of_skus)
+        _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
+        
+    def _update_for_multiple_offers(count_of_skus):
+        """Calculate and update all multiple offers."""
+        # Calculate the offers for A and B
+        _calculate_sku_multiple_offers("A", 5, count_of_skus)
+        _calculate_sku_multiple_offers("A", 3, count_of_skus)
+        _calculate_sku_multiple_offers("B", 2, count_of_skus)
     
     # Calculate total    
     # Multiply each count by the skus corresponding value
@@ -164,6 +164,7 @@ def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
 
 
 
