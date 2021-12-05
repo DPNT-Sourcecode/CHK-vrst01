@@ -136,7 +136,7 @@ SKU_OFFER_TYPES = {
     # sort according to value, highest to lowest, and then alphabetically.
     # TODO: if more challenge remained, consider a sorting function.
     "mix_and_match": {
-        "sku": "ZSTYX",
+        "skus": "ZSTYX",
         "offer_multiple": 3,
     }
 }
@@ -191,6 +191,17 @@ def _update_for_multiple_offers(count_of_skus):
     for sku_dictionary in SKU_OFFER_TYPES["multiple"]:
         sku_dictionary.update({"count_of_skus": count_of_skus})
         _calculate_sku_multiple_offers(**sku_dictionary)
+
+def _update_for_mix_and_match_offers(count_of_skus):
+    """Calculate and update all mix and match offers"""
+    skus = SKU_OFFER_TYPES["mix_and_match"]["skus"]
+    offer_multiple = SKU_OFFER_TYPES["mix_and_match"]["offer_multiple"]
+    sub_sku = ""
+
+    # create an ordered subsku for the skus in the offer
+    for sku in skus:
+        sub_sku = "".join([sub_sku, sku*count_of_skus[sku]])
+        count_of_skus[sku] = 0
     
 def _calculate_total(count_of_skus):
     """Helper function to calculate the total for all offers and SKUs"""
@@ -266,5 +277,6 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
