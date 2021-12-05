@@ -48,104 +48,23 @@ def checkout(skus):
         count_of_skus[sku] = sku_count
     if total_count_of_skus != length_of_input_string:
         return -1
-
-    def _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus):
-        """
-        Helper function to calculate the number of offers for,
-        and decrement the associated count of, a given sku
-        """
-        # first calculate the amount for an offer
-        # find shared items and remainder
-        shared, remainder =  divmod(count_of_skus[sku], offer_multiple)
-        offer_label = _offer_label_composition(sku, offer_multiple)
-        count_of_skus[offer_label] = shared
-        count_of_skus[sku] = remainder
-        
-    def _calculate_sku_offer_affecting_secondary_sku(
-            sku,
-            offer_multiple,
-            secondary_sku,
-            number_of_secondary_sku,
-            count_of_skus
-        ):
-        """
-            Helper function for the offer case which modifies a secondary SKU.
-            i.e. if a number of SKU E yields a free SKU B, reduce number of B when calculating
-            number in offer SKU E.
-        """
-        _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus)
-        offer_label = _offer_label_composition(sku, offer_multiple)
-        secondary_sku_modifier = count_of_skus[offer_label]*number_of_secondary_sku
-        # reduce secondary quantity, if less than 0 keep 0
-        count_of_skus[secondary_sku] = max(count_of_skus[secondary_sku] - secondary_sku_modifier, 0)
-
-    # def _calculate_E_offer(count_of_skus):
-    #     """
-    #     Helper function for the special E case multiple calculation.
-    #     """
-    #     _calculate_sku_offers("E", 2, count_of_skus)
-    #     # reduce B quantity, if less than 0 keep 0
-    #     count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
     
-    def _calculate_self_modifying_offer(
-        sku,
-        offer_multiple,
-        total_modifier,
-        number_of_sku,
-        count_of_skus,
-        total_for_sku_offer=0
-    ):
-        """
-            Helper function for the special case of a self-modifying multiple calculation.
-            i.e. if a number of SKU F yields a free SKU F, reduce number according to the offer.
-        """
-        offer_label = _offer_label_composition(sku, offer_multiple)
-        if number_of_sku<=offer_multiple:
-            count_of_skus[sku] = number_of_sku
-            count_of_skus[offer_label] = total_for_sku_offer
-            return None
+    _update_for_self_modifying_sku_offers(count_of_skus)
+    _update_for_secondary_sku_offers(count_of_skus)
+    _update_for_multiple_offers(count_of_skus)
 
-        remainder = number_of_sku - (offer_multiple + total_modifier)
-        total_for_sku_offer += 1
-        _calculate_self_modifying_offer(
-            sku,
-            offer_multiple,
-            total_modifier,
-            remainder,
-            count_of_skus,
-            total_for_sku_offer
-        )
     
-    # def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer=0):
-    #     """
-    #     Helper function for the special F case multiple calculation.
-    #     """
-    #     if number_of_F<=2:
-    #         count_of_skus["F"] = number_of_F
-    #         count_of_skus["F2_offer"] = total_for_F_offer
-    #         return None
-    #     remainder = number_of_F - 3
-    #     total_for_F_offer += 1
-    #     _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
-    
-    def _update_for_self_modifying_sku_offers(count_of_skus):
-        """Calculate and update all self-modifying offers."""
-        _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
 
-    def _update_for_secondary_sku_offers(count_of_skus):
-        """Calculate and update all secondary sku offers."""
-        _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
-        
-    def _update_for_multiple_offers(count_of_skus):
-        """Calculate and update all multiple offers."""
-        # Calculate the offers for A and B
-        _calculate_sku_multiple_offers("A", 5, count_of_skus)
-        _calculate_sku_multiple_offers("A", 3, count_of_skus)
-        _calculate_sku_multiple_offers("B", 2, count_of_skus)
+    return total_cost_of_basket
     
+def _calculate_total(count_of_skus):
+    """Helper function to calculate the total for all offers and SKUs"""
     # Calculate total    
     # Multiply each count by the skus corresponding value
     total_cost_of_basket = 0
+    all_sku_prices = {}
+    all_sku_prices.update(SKU_PRICE_MAP)
+    all_sku_prices.update(SKU_OFFER_PRICE_MAP)
     total_cost_of_basket += count_of_skus["A"]*50
     total_cost_of_basket += count_of_skus["B"]*30
     total_cost_of_basket += count_of_skus["C"]*20
@@ -158,12 +77,84 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["A5_offer"]*200
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
-    return total_cost_of_basket
-
 def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
+def _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus):
+        """
+        Helper function to calculate the number of offers for,
+        and decrement the associated count of, a given sku
+        """
+        # first calculate the amount for an offer
+        # find shared items and remainder
+        shared, remainder =  divmod(count_of_skus[sku], offer_multiple)
+        offer_label = _offer_label_composition(sku, offer_multiple)
+        count_of_skus[offer_label] = shared
+        count_of_skus[sku] = remainder
+        
+def _calculate_sku_offer_affecting_secondary_sku(
+        sku,
+        offer_multiple,
+        secondary_sku,
+        number_of_secondary_sku,
+        count_of_skus
+    ):
+    """
+        Helper function for the offer case which modifies a secondary SKU.
+        i.e. if a number of SKU E yields a free SKU B, reduce number of B when calculating
+        number in offer SKU E.
+    """
+    _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus)
+    offer_label = _offer_label_composition(sku, offer_multiple)
+    secondary_sku_modifier = count_of_skus[offer_label]*number_of_secondary_sku
+    # reduce secondary quantity, if less than 0 keep 0
+    count_of_skus[secondary_sku] = max(count_of_skus[secondary_sku] - secondary_sku_modifier, 0)
+
+def _calculate_self_modifying_offer(
+    sku,
+    offer_multiple,
+    total_modifier,
+    number_of_sku,
+    count_of_skus,
+    total_for_sku_offer=0
+):
+    """
+        Helper function for the special case of a self-modifying multiple calculation.
+        i.e. if a number of SKU F yields a free SKU F, reduce number according to the offer.
+    """
+    offer_label = _offer_label_composition(sku, offer_multiple)
+    if number_of_sku<=offer_multiple:
+        count_of_skus[sku] = number_of_sku
+        count_of_skus[offer_label] = total_for_sku_offer
+        return None
+
+    remainder = number_of_sku - (offer_multiple + total_modifier)
+    total_for_sku_offer += 1
+    _calculate_self_modifying_offer(
+        sku,
+        offer_multiple,
+        total_modifier,
+        remainder,
+        count_of_skus,
+        total_for_sku_offer
+    )
+
+def _update_for_self_modifying_sku_offers(count_of_skus):
+    """Calculate and update all self-modifying offers."""
+    _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
+
+def _update_for_secondary_sku_offers(count_of_skus):
+    """Calculate and update all secondary sku offers."""
+    _calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
+    
+def _update_for_multiple_offers(count_of_skus):
+    """Calculate and update all multiple offers."""
+    _calculate_sku_multiple_offers("A", 5, count_of_skus)
+    _calculate_sku_multiple_offers("A", 3, count_of_skus)
+    _calculate_sku_multiple_offers("B", 2, count_of_skus)
+
 
 
 
