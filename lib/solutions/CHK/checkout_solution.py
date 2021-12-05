@@ -197,12 +197,19 @@ def _update_for_mix_and_match_offers(count_of_skus):
     skus = SKU_OFFER_TYPES["mix_and_match"]["skus"]
     offer_multiple = SKU_OFFER_TYPES["mix_and_match"]["offer_multiple"]
     sub_sku = ""
-
     # create an ordered subsku for the skus in the offer
     for sku in skus:
         sub_sku = "".join([sub_sku, sku*count_of_skus[sku]])
         count_of_skus[sku] = 0
-    
+    shared, remainder =  divmod(len(sub_sku), offer_multiple)
+    # create a sub_sku for remainder letters
+    skus_to_keep = sub_sku[-remainder:]
+    for sku in set(skus_to_keep):
+        count_of_skus[sku] = skus_to_keep.count(sku)
+    if shared:
+        offer_label = _offer_label_composition(skus, offer_multiple)
+        count_of_skus[offer_label] = shared
+ 
 def _calculate_total(count_of_skus):
     """Helper function to calculate the total for all offers and SKUs"""
     total_cost_of_basket = 0
@@ -277,6 +284,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
