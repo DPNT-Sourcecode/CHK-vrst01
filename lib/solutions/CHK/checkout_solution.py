@@ -57,10 +57,6 @@ SKU_OFFER_PRICE_MAP = {
     "V3_offer": 130,
 }
 
-_calculate_sku_offer_affecting_secondary_sku("E", 2, "B", 1, count_of_skus)
-    _calculate_sku_offer_affecting_secondary_sku("N", 3, "M", 1, count_of_skus)
-    _calculate_sku_offer_affecting_secondary_sku("R", 3, "Q", 1, count_of_skus)
-
 SKU_OFFER_TYPES = {
     "self_modifying": [
         {
@@ -92,6 +88,48 @@ SKU_OFFER_TYPES = {
             "offer_multiple": 3,
             "secondary_sku": "Q",
             "number_of_secondary_sku": 1
+        },
+    ],
+    "multiple": [
+        {
+            "sku": "A",
+            "offer_multiple": "5",
+        },
+        {
+            "sku": "A",
+            "offer_multiple": "3",
+        },
+        {
+            "sku": "B",
+            "offer_multiple": "2",
+        },
+        {
+            "sku": "H",
+            "offer_multiple": "10",
+        },
+        {
+            "sku": "H",
+            "offer_multiple": "5",
+        },
+        {
+            "sku": "K",
+            "offer_multiple": "2",
+        },
+        {
+            "sku": "P",
+            "offer_multiple": "5",
+        },
+        {
+            "sku": "Q",
+            "offer_multiple": "3",
+        },
+        {
+            "sku": "V",
+            "offer_multiple": "3",
+        },
+        {
+            "sku": "V",
+            "offer_multiple": "2",
         },
     ]
 }
@@ -129,8 +167,10 @@ def checkout(skus):
     
 def _update_for_self_modifying_sku_offers(count_of_skus):
     """Calculate and update all self-modifying offers."""
-    _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
-    _calculate_self_modifying_offer("U", 3, 1, count_of_skus["U"], count_of_skus)
+    for sku_dictionary in SKU_OFFER_TYPES["self_modifying"]:
+        number_of_sku = count_of_skus[sku_dictionary["sku"]]
+        sku_dictionary.update({"number_of_sku": number_of_sku, "count_of_skus": count_of_skus})
+        _calculate_self_modifying_offer(**sku_dictionary)
 
 def _update_for_secondary_sku_offers(count_of_skus):
     """Calculate and update all secondary sku offers."""
@@ -225,6 +265,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
