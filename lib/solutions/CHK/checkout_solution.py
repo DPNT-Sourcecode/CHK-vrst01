@@ -1,3 +1,13 @@
+# Refactor code before chk4
+# Very first validate the input:
+    # - Validate that it is a string
+    # - Validate that it only contains appropriate letters (A,B,C,D,E,F...) 
+# Gather the number of each letter present in the string provided
+# For special cases like F, we need to find the number of recursively modify the number in F to keep applying the offer, every multiple of 2 removes 1 F from consideration.
+# For special case like E, find the multiples first, then reduce the number of B according to it's offer detail.
+# Then for special cases like A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
+# For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
+
 
 
 # noinspection PyUnusedLocal
@@ -6,15 +16,7 @@ def checkout(skus):
     """
         Function to calculate total value for skus provided.
     """
-    # Very first validate the input:
-        # - Validate that it is a string
-        # - Validate that it only contains appropriate letters (A,B,C,D,E,F) 
-    # Gather the number of each letter present in the string provided
-    # For special case F, we need to find the number of recursively modify the number in F to keep applying the offer, every multiple of 2 removes 1 F from consideration.
-    # For special case E, find the multiples first, then reduce the number of B according to it's offer detail.
-    # Then for special cases A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
-    # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
-        
+   
     if not isinstance(skus, str):
         return -1
     
@@ -87,3 +89,4 @@ def checkout(skus):
     total_cost_of_basket += count_of_skus["F2_offer"]*20
 
     return total_cost_of_basket
+
