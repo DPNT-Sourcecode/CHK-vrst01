@@ -79,13 +79,34 @@ def checkout(skus):
         # reduce secondary quantity, if less than 0 keep 0
         count_of_skus[secondary_sku] = max(count_of_skus[secondary_sku] - secondary_sku_modifier, 0)
 
-    def _calculate_E_offer(count_of_skus):
+    # def _calculate_E_offer(count_of_skus):
+    #     """
+    #     Helper function for the special E case multiple calculation.
+    #     """
+    #     _calculate_sku_offers("E", 2, count_of_skus)
+    #     # reduce B quantity, if less than 0 keep 0
+    #     count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
+    
+    def _calculate_self_modifying_offer(
+        sku,
+        offer_multiple,
+        total_modifier,
+        number_of_sku,
+        count_of_skus,
+        total_for_sku_offer=0
+    ):
         """
-        Helper function for the special E case multiple calculation.
+            Helper function for the special case of a self-modifying multiple calculation.
+            i.e. if a number of SKU F yields a free SKU F, reduce number according to the offer.
         """
-        _calculate_sku_offers("E", 2, count_of_skus)
-        # reduce B quantity, if less than 0 keep 0
-        count_of_skus["B"] = max(count_of_skus["B"]-count_of_skus["E2_offer"], 0)
+        offer_label = _offer_label_composition(sku, offer_multiple)
+        if number_of_sku<=offer_multiple:
+            count_of_skus[sku] = number_of_sku
+            count_of_skus[sku_offer_label] = total_for_sku_offer
+            return None
+        remainder = number_of_sku - (offer_multiple + total_modifier)
+        total_for_sku_offer += 1
+        _calculate_self_modifying_offer(remainder, count_of_skus, total_for_sku_offer)
     
     def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer=0):
         """
@@ -130,6 +151,7 @@ def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
 
 
 
