@@ -49,7 +49,7 @@ def checkout(skus):
     if total_count_of_skus != length_of_input_string:
         return -1
 
-    def _calculate_sku_mulitple_offers(sku, offer_multiple, count_of_skus):
+    def _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus):
         """
         Helper function to calculate the number of offers for,
         and decrement the associated count of, a given sku
@@ -60,6 +60,19 @@ def checkout(skus):
         offer_label = _offer_label_composition(sku, offer_multiple)
         count_of_skus[offer_label] = shared
         count_of_skus[sku] = remainder
+        
+    def _calculate_sku_offer_affecting_secondary_sku(
+            sku,
+            offer_multiple,
+            secondary_sku,
+            number_of_secondary_sku,
+            count_of_skus
+        ):
+        """
+            Helper function for the offer case which modifies a secondary SKU.
+            i.e. if a number of SKU E yields a free SKU B, reduce number of B when calculating
+            number in offer SKU E.
+        """
     
     def _calculate_E_offer(count_of_skus):
         """
@@ -112,4 +125,5 @@ def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
 
