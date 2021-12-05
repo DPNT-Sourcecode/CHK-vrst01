@@ -7,9 +7,11 @@
 # For special cases like F, we need to find the number of recursively modify the number in F to keep applying the offer, every multiple of 2 removes 1 F from consideration.
 # For special case like E, find the multiples first, then reduce the number of B according to it's offer detail.
 # Then for special cases like A, B find the multiples (if any) this is of the special quantity, create a new category for this and store the value for the remainder
+# Added new mix and match case and update values
 # For each letter (and new representation for offer values) multiply the value by the number of them in the products in the basket
 
 # TODO: function that can parse the input from the challenge file would make remove effort here.
+# TODO: might be more elegant to move these to a config type file also, but this is sufficient.
 SKU_PRICE_MAP = {
     "A": 50,
     "B": 30,
@@ -194,6 +196,7 @@ def _update_for_multiple_offers(count_of_skus):
 
 def _update_for_mix_and_match_offers(count_of_skus):
     """Calculate and update all mix and match offers"""
+    # TODO: This could have a potential performance improvement if moved into initial sku counting
     skus = SKU_OFFER_TYPES["mix_and_match"]["skus"]
     offer_multiple = SKU_OFFER_TYPES["mix_and_match"]["offer_multiple"]
     sub_sku = ""
@@ -284,6 +287,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 
