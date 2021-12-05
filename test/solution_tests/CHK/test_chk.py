@@ -37,8 +37,3 @@ class TestCHK():
         assert checkout_solution.checkout("AUUUUUUUARRRZQQSQQYXTTTT") == 697
     def test_simplest_mix_and_match_offer(self):
         assert checkout_solution.checkout("STXSTX") == 90
-
-
-
-
-

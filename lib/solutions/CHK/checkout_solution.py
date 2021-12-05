@@ -288,11 +288,3 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
-
-
-
-
-
-
-
-
