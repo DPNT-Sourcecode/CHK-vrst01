@@ -203,6 +203,8 @@ def _update_for_mix_and_match_offers(count_of_skus):
     # create an ordered subsku for the skus in the offer
     for sku in skus:
         sub_sku = "".join([sub_sku, sku*count_of_skus[sku]])
+        if sub_sku:
+            import pdb; pdb.set_trace()
         count_of_skus[sku] = 0
     shared, remainder =  divmod(len(sub_sku), offer_multiple)
     # create a sub_sku for remainder letters
@@ -287,6 +289,7 @@ def _calculate_self_modifying_offer(
         count_of_skus,
         total_for_sku_offer
     )
+
 
 
 

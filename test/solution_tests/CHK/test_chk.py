@@ -1,3 +1,4 @@
+from lib.solutions.CHK.checkout_solution import checkout
 from solutions.CHK import checkout_solution
 
 #TODO:This could potentially be improved with more focus on helper functions, but this is sufficient
@@ -34,5 +35,8 @@ class TestCHK():
         assert checkout_solution.checkout("ARRRZQQSQQYXTTTT") == 407
     def test_R_offer_Q_offer_mix_and_match_offer_and_7Us_offer(self):
         assert checkout_solution.checkout("AUUUUUUUARRRZQQSQQYXTTTT") == 697
+    def test_simplest_mix_and_match_offer(self):
+        assert checkout_solution.checkout("STXSTX") == 90
+
 
 
