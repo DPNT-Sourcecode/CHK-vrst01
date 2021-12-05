@@ -73,7 +73,12 @@ def checkout(skus):
             i.e. if a number of SKU E yields a free SKU B, reduce number of B when calculating
             number in offer SKU E.
         """
-    
+        _calculate_sku_multiple_offers(sku, offer_multiple, count_of_skus)
+        offer_label = _offer_label_composition(sku, offer_multiple)
+        secondary_sku_modifier = count_of_skus[offer_label]*number_of_secondary_sku
+        # reduce secondary quantity, if less than 0 keep 0
+        count_of_skus[secondary_sku] = max(count_of_skus[secondary_sku] - secondary_sku_modifier, 0)
+
     def _calculate_E_offer(count_of_skus):
         """
         Helper function for the special E case multiple calculation.
@@ -125,5 +130,6 @@ def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
 
 
