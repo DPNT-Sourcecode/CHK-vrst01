@@ -102,25 +102,38 @@ def checkout(skus):
         offer_label = _offer_label_composition(sku, offer_multiple)
         if number_of_sku<=offer_multiple:
             count_of_skus[sku] = number_of_sku
-            count_of_skus[sku_offer_label] = total_for_sku_offer
+            count_of_skus[offer_label] = total_for_sku_offer
             return None
+
         remainder = number_of_sku - (offer_multiple + total_modifier)
         total_for_sku_offer += 1
-        _calculate_self_modifying_offer(remainder, count_of_skus, total_for_sku_offer)
+        _calculate_self_modifying_offer(
+            sku,
+            offer_multiple,
+            total_modifier,
+            remainder,
+            count_of_skus,
+            total_for_sku_offer
+        )
     
-    def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer=0):
-        """
-        Helper function for the special F case multiple calculation.
-        """
-        if number_of_F<=2:
-            count_of_skus["F"] = number_of_F
-            count_of_skus["F2_offer"] = total_for_F_offer
-            return None
-        remainder = number_of_F - 3
-        total_for_F_offer += 1
-        _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
+    # def _calculate_F_offer(number_of_F, count_of_skus, total_for_F_offer=0):
+    #     """
+    #     Helper function for the special F case multiple calculation.
+    #     """
+    #     if number_of_F<=2:
+    #         count_of_skus["F"] = number_of_F
+    #         count_of_skus["F2_offer"] = total_for_F_offer
+    #         return None
+    #     remainder = number_of_F - 3
+    #     total_for_F_offer += 1
+    #     _calculate_F_offer(remainder, count_of_skus, total_for_F_offer)
+    
+    def _update_for_self_modifying_sku_offers(count_of_skus):
+        """Calculate and update all self-modifying offers."""
+        _calculate_self_modifying_offer("F", 2, 1, count_of_skus["F"], count_of_skus)
 
-    _calculate_F_offer(count_of_skus["F"], count_of_skus)
+    def _update_for_secondary_sku_offers(count_of_skus):
+        """Calculate and update all secondary sku offers."""
 
     # Calculate the offers for E
     _calculate_E_offer(count_of_skus)
@@ -151,6 +164,7 @@ def _offer_label_composition(sku, offer_multiple):
     """Helper function to create offer name strings."""
     sku_offer_label = "".join([sku, str(offer_multiple), "_offer"])
     return sku_offer_label
+
 
 
 
